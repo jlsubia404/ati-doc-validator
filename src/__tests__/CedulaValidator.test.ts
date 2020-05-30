@@ -3,7 +3,7 @@ import { AtiDocumentValidator, AtiValidatorResult } from './../index';
 const lengthLessThan10 = new AtiValidatorResult(false,'');
 
 test('Only numbers', () => {
-    lengthLessThan10.message = 'Documento solo debe constar de numeros';
+    lengthLessThan10.message = 'Documento solo debe constar de números';
     expect(AtiDocumentValidator.cedulaValidator('123xxcd')).toStrictEqual(lengthLessThan10);
 });
 
