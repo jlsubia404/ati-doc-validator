@@ -1,6 +1,6 @@
 {
   "name": "@devoxs/ati-doc-validator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Libreria de validacion de documentos oficiales del Ecuador",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

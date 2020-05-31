@@ -1,26 +1,21 @@
-import { AtiDocumentValidator, AtiValidatorResult } from './../index';
-
-const lengthLessThan10 = new AtiValidatorResult(false,'');
+import { AtiDocumentValidator } from './../index';
 
 test('Only numbers', () => {
-    lengthLessThan10.message = 'Documento solo debe constar de números';
-    expect(AtiDocumentValidator.cedulaValidator('123xxcd')).toStrictEqual(lengthLessThan10);
+  expect(AtiDocumentValidator.cedulaValidator('123xxcd').result).toStrictEqual(false);
 });
 
 test('length less than 10', () => {
-    lengthLessThan10.message = 'Longitud de documento menor que 10';
-    expect(AtiDocumentValidator.cedulaValidator('123')).toStrictEqual(lengthLessThan10);
+  expect(AtiDocumentValidator.cedulaValidator('123').result).toStrictEqual(false);
+});
+
+test('greater than 10', () => {
+  expect(AtiDocumentValidator.cedulaValidator('12345678901').result).toStrictEqual(false);
 });
 
 test('valid Document', () => {
-    lengthLessThan10.message = '';
-    lengthLessThan10.result = true;
-    expect(AtiDocumentValidator.cedulaValidator('1003503198')).toStrictEqual(lengthLessThan10);
+  expect(AtiDocumentValidator.cedulaValidator('1003503198').result).toStrictEqual(true);
 });
 
-
 test('invalid Document', () => {
-    lengthLessThan10.message = 'Número de documento incorrecto';
-    lengthLessThan10.result = false;
-    expect(AtiDocumentValidator.cedulaValidator('1003503199')).toStrictEqual(lengthLessThan10);
+  expect(AtiDocumentValidator.cedulaValidator('1003503199').result).toStrictEqual(false);
 });
