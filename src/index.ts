@@ -3,7 +3,40 @@ interface AtiValidatorResult {
   message: string;
 }
 class AtiDocumentValidatorClass {
+  private provinceCodes = [
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+  ];
+
   private _regexOnlyTenNumbers = new RegExp('^[0-9]{10}$');
+
+  private _regexOnly13Numbers = new RegExp('^([0-9]{10})001$');
+
+  private _regexRucPrvtSocNoResident = new RegExp(`^(${this.provinceCodes.join('|')})9([0-9]{7})001$`);
+
+  private _regexPublicSociety = new RegExp(`^(${this.provinceCodes.join('|')})6([0-9]{6})0001$`);
 
   private isNullOrUndefined(value: any): boolean {
     return value === undefined || value === null;
@@ -16,7 +49,7 @@ class AtiDocumentValidatorClass {
     };
 
     if (this.isNullOrUndefined(cedula)) {
-      validationResult.message = 'Parametro de entrada incorrecto';
+      validationResult.message = 'Parámetro de entrada incorrecto';
       return validationResult;
     }
 
@@ -47,6 +80,30 @@ class AtiDocumentValidatorClass {
     }
 
     return validationResult;
+  }
+
+  rucValidator(ruc: string) {
+    const validationResult: AtiValidatorResult = {
+      result: false,
+      message: '',
+    };
+
+    if (!this._regexOnly13Numbers.test(ruc)) {
+      validationResult.message = 'Documento no cumple formato. Solo se permiten 13 dígitos.';
+      return validationResult;
+    }
+
+    validationResult.result =
+      this.cedulaValidator(ruc.substring(0, 10)).result ||
+      this._regexRucPrvtSocNoResident.test(ruc) ||
+      this._regexPublicSociety.test(ruc);
+
+    if( !validationResult.result ){
+      validationResult.message = 'Número de RUC incorrecto';
+    }
+
+    return validationResult;
+
   }
 }
 
