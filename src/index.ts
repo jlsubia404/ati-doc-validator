@@ -42,7 +42,7 @@ class AtiDocumentValidatorClass {
     return value === undefined || value === null;
   }
 
-  cedulaValidator(cedula: string): AtiValidatorResult {
+  cedulaValidator = (cedula: string): AtiValidatorResult  => {
     const validationResult: AtiValidatorResult = {
       result: false,
       message: '',
@@ -54,7 +54,7 @@ class AtiDocumentValidatorClass {
     }
 
     if (!this._regexOnlyTenNumbers.test(cedula)) {
-      validationResult.message = 'Documento no cumple formato. Solo 10 dígitos';
+      validationResult.message = 'Documento no cumple formato. Solo se permiten 10 dígitos';
       return validationResult;
     }
 
@@ -82,7 +82,7 @@ class AtiDocumentValidatorClass {
     return validationResult;
   }
 
-  rucValidator(ruc: string) {
+  rucValidator = (ruc: string): AtiValidatorResult => {
     const validationResult: AtiValidatorResult = {
       result: false,
       message: '',
@@ -107,4 +107,4 @@ class AtiDocumentValidatorClass {
   }
 }
 
-export const AtiDocumentValidator = new AtiDocumentValidatorClass();
+export const AtiDocumentValidator =  AtiDocumentValidatorClass;
